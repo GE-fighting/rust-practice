@@ -10,7 +10,7 @@ fn cli_no_args() {
 }
 
 // `kvs -V` should print the version
-#[test]
+#[test] 
 fn cli_version() {
     Command::cargo_bin("kvs")
         .unwrap()

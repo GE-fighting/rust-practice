@@ -1,14 +1,23 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+use clap::Parser;
+
+#[derive(Parser, Debug)]
+pub struct KvStore{
+    pub op_type:Option<String>
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+impl KvStore {
+    pub fn new() -> KvStore{
+        panic!()
+    }
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    pub fn set(&mut self, key:String, value:String){
+        panic!()
+    }
+    pub fn get(&mut self, key:String) -> Option<String>{
+        panic!()
+    }
+
+    pub fn remove(&mut self, key:String) -> bool{
+        panic!()
     }
 }
