@@ -3,7 +3,7 @@ use std::process::exit;
 
 
 #[derive(Parser)]
-#[command(author, version=env!("CARGO_PKG_VERSION"), about, long_about = None)]
+#[command(author=env!("CARGO_PKG_AUTHORS"), version=env!("CARGO_PKG_VERSION"), about=env!("CARGO_PKG_DESCRIPTION"), long_about = None)]
 #[command(propagate_version = true)]
 struct Cli {
     #[command(subcommand)]
@@ -12,7 +12,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Adds files to myapp
+    /// get value from key
     Get {key1: String},
     Set {key1: String, value1:String},
     Rm {key1: String}
