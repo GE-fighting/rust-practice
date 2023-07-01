@@ -1,23 +1,26 @@
-use clap::Parser;
+use std::collections::HashMap;
 
-#[derive(Parser, Debug)]
+#[derive(Debug)]
 pub struct KvStore{
-    pub op_type:Option<String>
+   store: HashMap<String,String>,
 }
 
 impl KvStore {
     pub fn new() -> KvStore{
-        panic!()
+        let mut mapStore: HashMap<String, String> = HashMap::new();
+        KvStore{
+            store: mapStore,
+        }
     }
 
     pub fn set(&mut self, key:String, value:String){
-        panic!()
+        self.store.insert(key, value);
     }
     pub fn get(&mut self, key:String) -> Option<String>{
-        panic!()
+        self.store.get(&key).cloned()
     }
 
     pub fn remove(&mut self, key:String) -> bool{
-        panic!()
+        self.store.remove(&key).is_some()
     }
 }
