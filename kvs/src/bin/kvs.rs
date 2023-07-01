@@ -1,7 +1,6 @@
 use clap::{Parser, Subcommand};
 use std::process::exit;
 
-
 #[derive(Parser)]
 #[command(author, version=env!("CARGO_PKG_VERSION"), about, long_about = None)]
 #[command(propagate_version = true)]
@@ -13,24 +12,30 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Adds files to myapp
-    Get {key1: String},
-    Set {key1: String, value1:String},
-    Rm {key1: String}
+    Get {
+        key1: String,
+    },
+    Set {
+        key1: String,
+        value1: String,
+    },
+    Rm {
+        key1: String,
+    },
 }
-fn main(){
+fn main() {
     let cli = Cli::parse();
-    
 
     match &cli.command {
         Some(Commands::Rm { key1 }) => {
             eprintln!("unimplemented");
             exit(1)
-        },
-        Some(Commands::Get { key1}) =>{
+        }
+        Some(Commands::Get { key1 }) => {
             eprintln!("unimplemented");
             exit(1)
-        },
-        Some(Commands::Set { key1, value1 }) =>{
+        }
+        Some(Commands::Set { key1, value1 }) => {
             eprintln!("unimplemented");
             exit(1)
         }
@@ -39,6 +44,4 @@ fn main(){
             unreachable!()
         }
     }
-    
-    
 }
