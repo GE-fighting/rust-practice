@@ -1,6 +1,6 @@
 use clap::{Parser, Subcommand};
 use std::process::exit;
-use kvs::Result;
+use kvs::{KvStore, Result};
 
 #[derive(Parser)]
 #[command(author=env!("CARGO_PKG_AUTHORS"), version=env!("CARGO_PKG_VERSION"), about=env!("CARGO_PKG_DESCRIPTION"), long_about = None)]
@@ -26,6 +26,7 @@ enum Commands {
 }
 fn main() -> Result<()>{
     let cli = Cli::parse();
+    let mut kv = KvStore::new();
 
     match &cli.command {
         Some(Commands::Rm { key1 }) => {
@@ -37,7 +38,8 @@ fn main() -> Result<()>{
             exit(1)
         }
         Some(Commands::Set { key1, value1 }) => {
-            eprintln!("unimplemented");
+            kv.set(key1.to_string(),value1.to_string());
+            println!("--------------");
             exit(1)
         }
         None => {
