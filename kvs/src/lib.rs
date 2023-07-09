@@ -1,12 +1,24 @@
-use std::{collections::HashMap, path::PathBuf};
+use failure::Fail;
+use std::{collections::HashMap, io, path::PathBuf};
+use serde::{Serialize, Deserialize};
+#[derive(Debug, Fail)]
+pub enum KvError {
+    /// Io error
+    #[fail(display = "io error occurred.")]
+    IoError(#[cause] io::Error),
 
+    ///serde  error
+    #[fail(display = "serde error occurred.")]
+    SerdeErr(#[cause] serde_json::Error)
 
-#[derive(Debug)]
-pub enum Error {
-   
 }
 
-pub type Result<T> = std::result::Result<T, Error>;
+pub type Result<T> = std::result::Result<T, KvError>;
+
+
+
+
+
 
 #[derive(Debug)]
 pub struct KvStore {
@@ -25,16 +37,17 @@ impl KvStore {
         Ok(true)
     }
     ///get a key/value pair from the store
-    pub fn get(&mut self, key: String) -> Result<String> {
-       let res_string =  self.store.get(&key).cloned().unwrap();
-       Ok(res_string)
+    pub fn get(&mut self, key: String) -> Result<Option<String>> {
+        let res_string = self.store.get(&key).cloned().unwrap();
+        Ok(Some(res_string))
     }
     ///remove a key/value pair from the
-    pub fn remove(&mut self, key: String) -> bool {
-        self.store.remove(&key).is_some()
+    pub fn remove(&mut self, key: String) -> Result<()> {
+        self.store.remove(&key).is_some();
+        Ok(())
     }
-    pub fn open(path: impl Into<PathBuf>) -> Result<KvStore>{
-        let kv =  KvStore::new();
+    pub fn open(path: impl Into<PathBuf>) -> Result<KvStore> {
+        let kv = KvStore::new();
         return Ok(kv);
     }
 }

@@ -1,5 +1,6 @@
 use clap::{Parser, Subcommand};
 use std::process::exit;
+use kvs::Result;
 
 #[derive(Parser)]
 #[command(author=env!("CARGO_PKG_AUTHORS"), version=env!("CARGO_PKG_VERSION"), about=env!("CARGO_PKG_DESCRIPTION"), long_about = None)]
@@ -12,11 +13,18 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Adds files to myapp
-    Get {key1: String},
-    Set {key1: String, value1:String},
-    Rm {key1: String}
+    Get {
+        key1: String,
+    },
+    Set {
+        key1: String,
+        value1: String,
+    },
+    Rm {
+        key1: String,
+    },
 }
-fn main() {
+fn main() -> Result<()>{
     let cli = Cli::parse();
 
     match &cli.command {
