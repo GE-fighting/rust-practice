@@ -30,17 +30,17 @@ fn main() -> Result<()>{
 
     match &cli.command {
         Some(Commands::Rm { key1 }) => {
-            eprintln!("unimplemented");
-            exit(1)
+            kv.remove(key1.to_string())
+
         }
         Some(Commands::Get { key1 }) => {
             eprintln!("unimplemented");
             exit(1)
         }
         Some(Commands::Set { key1, value1 }) => {
-            kv.set(key1.to_string(),value1.to_string());
-            println!("--------------");
-            exit(1)
+            
+            kv.set(key1.to_string(),value1.to_string())
+
         }
         None => {
             println!("no op applied");
