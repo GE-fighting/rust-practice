@@ -1,7 +1,6 @@
 use clap::{Parser, Subcommand};
 use kvs::{KvStore, Result};
 use std::env::current_dir;
-use std::process::exit;
 
 #[derive(Parser)]
 #[command(author=env!("CARGO_PKG_AUTHORS"), version=env!("CARGO_PKG_VERSION"), about=env!("CARGO_PKG_DESCRIPTION"), long_about = None)]
