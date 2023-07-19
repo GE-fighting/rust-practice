@@ -1,5 +1,5 @@
 use clap::{Parser, Subcommand};
-use kvs::{KvStore, Result};
+use kvs::{KvStore, Result, KvError};
 use std::env::current_dir;
 
 #[derive(Parser)]
@@ -26,11 +26,20 @@ enum Commands {
 }
 fn main() -> Result<()> {
     let cli = Cli::parse();
-    let path = current_dir()?.join("data");
+    let path = current_dir()?;
     match &cli.command {
         Some(Commands::Rm { key1 }) => {
             let mut kv = KvStore::open(path)?;
-            kv.remove(key1.to_string())
+            match kv.remove(key1.to_string()){
+                Ok(()) => {},
+                Err(KvError::KeyNotFound) => {
+                    println!("Key not found");
+                    std::process::exit(1);
+                },
+                Err(e) => {
+                    return Err(e);
+                }
+            };
         }
         Some(Commands::Get { key1 }) => {
             let mut kv = KvStore::open(path)?;
@@ -39,15 +48,15 @@ fn main() -> Result<()> {
             } else {
                 println!("Key not found");
             }
-            Ok(())
+    
         }
         Some(Commands::Set { key1, value1 }) => {
             let mut kv = KvStore::open(path)?;
-            kv.set(key1.to_string(), value1.to_string())
+            kv.set(key1.to_string(), value1.to_string())?;
         }
         None => {
-            println!("no op applied");
             unreachable!()
         }
     }
+    Ok(())
 }

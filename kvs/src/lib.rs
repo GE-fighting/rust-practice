@@ -25,7 +25,7 @@ pub enum KvError {
 
     #[fail(display = "Unexpect Command Type")]
     UnexpectedCommandType,
-    #[fail(display = "Key Not Found")]
+    #[fail(display = "Key not found")]
     KeyNotFound,
 }
 
@@ -116,7 +116,6 @@ impl KvStore {
     }
     ///remove a key/value pair from the
     pub fn remove(&mut self, key: String) -> Result<()> {
-        println!("remove key is {}", key);
         //判断键值索引是否包含该键
         if self.index.contains_key(&key) {
             //1、在日志中存入命令
@@ -125,7 +124,7 @@ impl KvStore {
             self.writer.flush()?;
             //2、删除键值索引里面的值
             if let Commend::Remove { key } = rm_cmd {
-                let old_cmd = self.index.remove(&key).expect("kety not found");
+                let old_cmd = self.index.remove(&key).expect("Key not found");
                 self.uncompaction += old_cmd.len;
             }
             Ok(())
@@ -137,7 +136,6 @@ impl KvStore {
     pub fn open(path: impl Into<PathBuf>) -> Result<KvStore> {
         // 拿到路径
         let path = path.into();
-        println!("日志文件路径是：{}", path.display());
         // 如果目录不存在，则级联创建目录
         fs::create_dir_all(&path)?;
         // 创建reader 和 index
