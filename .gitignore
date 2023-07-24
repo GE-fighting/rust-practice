@@ -1,3 +1,7 @@
 minigrep/target/
 kvs/target/
+<<<<<<< HEAD
 .idea/
+=======
+webserver/target
+>>>>>>> c7a10f7b13dd2f5de1464453aadf5df9edece2fb
